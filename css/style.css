@@ -1,0 +1,509 @@
+/* ============================================
+   RETRO HUB - MÖRK ARCADEDESIGN
+   ============================================ */
+
+/* ---------- IMPORTERA GOOGLE FONTS ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+/* ---------- GRUNDLÄGGANDE ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #222222;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: #e0e0e0;
+    font-family: 'VT323', 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+    background: #1a0a0a !important;
+    border-bottom: 4px solid #e52521 !important;
+    padding: 8px 0;
+    box-shadow: 0 4px 20px rgba(229, 37, 33, 0.2);
+}
+
+.navbar-brand {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 1.2rem !important;
+    color: #f7d51e !important;
+    text-shadow: 0 0 20px rgba(247, 213, 30, 0.3);
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.navbar-brand:hover {
+    color: #ffffff !important;
+    text-shadow: 0 0 30px rgba(247, 213, 30, 0.6);
+    transform: scale(1.02);
+}
+
+.navbar-toggler {
+    border: 2px solid #f7d51e !important;  /* Gul ram */
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+    background: rgba(247, 213, 30, 0.1);  /* Lätt gul bakgrund */
+}
+
+.navbar-toggler-icon {
+    filter: invert(1) brightness(1.5);
+    opacity: 1;
+}
+
+.navbar-nav .nav-link {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: #aaaaaa !important;
+    padding: 8px 16px !important;
+    margin: 0 4px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+    background: rgba(229, 37, 33, 0.2);
+    border-color: #e52521;
+    text-shadow: 0 0 20px rgba(229, 37, 33, 0.3);
+}
+
+.navbar-nav .nav-link.active {
+    background: rgba(229, 37, 33, 0.3);
+    color: #f7d51e !important;
+    border-color: #f7d51e;
+    box-shadow: 0 0 20px rgba(247, 213, 30, 0.1);
+}
+
+/* ---------- HERO ---------- */
+.hero {
+    padding: 60px 0 40px;
+    text-align: center;
+    position: relative;
+}
+
+.hero h1 {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 2.5rem;
+    color: #e52521;
+    text-shadow: 0 0 30px rgba(229, 37, 33, 0.3);
+    margin-bottom: 16px;
+}
+
+.hero .lead {
+    font-family: 'VT323', 'Courier New', monospace;
+    font-size: 1.5rem;
+    color: #aaaaaa;
+    max-width: 600px;
+    margin: 0 auto 10px;
+}
+
+/* ---------- CARDS ---------- */
+.card {
+    background: rgba(20, 20, 20, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border: 2px solid #333 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card.border-warning {
+    border-color: #f7d51e !important;
+    box-shadow: 0 4px 30px rgba(247, 213, 30, 0.05);
+}
+.card.border-warning:hover {
+    box-shadow: 0 8px 40px rgba(247, 213, 30, 0.1);
+}
+.card.border-warning .card-title {
+    color: #f7d51e !important;
+}
+
+.card.border-success {
+    border-color: #41b53d !important;
+    box-shadow: 0 4px 30px rgba(65, 181, 61, 0.05);
+}
+.card.border-success:hover {
+    box-shadow: 0 8px 40px rgba(65, 181, 61, 0.1);
+}
+.card.border-success .card-title {
+    color: #41b53d !important;
+}
+
+.card.border-primary {
+    border-color: #0068b4 !important;
+    box-shadow: 0 4px 30px rgba(0, 104, 180, 0.05);
+}
+.card.border-primary:hover {
+    box-shadow: 0 8px 40px rgba(0, 104, 180, 0.1);
+}
+.card.border-primary .card-title {
+    color: #0068b4 !important;
+}
+
+.card.border-secondary {
+    border-color: #444 !important;
+    opacity: 0.6;
+}
+
+.card .card-title {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+.card .card-text {
+    font-family: 'VT323', 'Courier New', monospace;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #bbbbbb;
+}
+
+/* ---------- KNAPPAR ---------- */
+.btn {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.65rem;
+    padding: 12px 32px;
+    border-radius: 12px;
+    border: 2px solid #333 !important;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-outline-warning {
+    background: rgba(247, 213, 30, 0.15) !important;
+    color: #f7d51e !important;
+    border-color: #f7d51e !important;
+}
+.btn-outline-warning:hover {
+    background: #f7d51e !important;
+    color: #0d0d0d !important;
+    box-shadow: 0 0 30px rgba(247, 213, 30, 0.2);
+}
+
+.btn-outline-success {
+    background: rgba(65, 181, 61, 0.15) !important;
+    color: #41b53d !important;
+    border-color: #41b53d !important;
+}
+.btn-outline-success:hover {
+    background: #41b53d !important;
+    color: #0d0d0d !important;
+    box-shadow: 0 0 30px rgba(65, 181, 61, 0.2);
+}
+
+.btn-outline-primary {
+    background: rgba(0, 104, 180, 0.15) !important;
+    color: #0068b4 !important;
+    border-color: #0068b4 !important;
+}
+.btn-outline-primary:hover {
+    background: #0068b4 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 30px rgba(0, 104, 180, 0.2);
+}
+
+.btn-outline-secondary {
+    background: rgba(100, 100, 100, 0.15) !important;
+    color: #888 !important;
+    border-color: #444 !important;
+}
+.btn-outline-secondary:hover {
+    background: #444 !important;
+    color: #ffffff !important;
+}
+
+.btn-warning {
+    background: #f7d51e !important;
+    color: #0d0d0d !important;
+    border-color: #f7d51e !important;
+}
+.btn-warning:hover {
+    background: #ffeb3b !important;
+    box-shadow: 0 0 30px rgba(247, 213, 30, 0.3);
+}
+
+/* ---------- SPEL-SIDOR ---------- */
+.game-container h1 {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 1.8rem;
+    color: #e52521;
+    text-shadow: 0 0 30px rgba(229, 37, 33, 0.2);
+    margin-bottom: 8px;
+}
+
+.game-container p {
+    font-family: 'VT323', 'Courier New', monospace;
+    font-size: 1.2rem;
+    color: #aaaaaa;
+}
+
+/* Canvas - Mörk TV-ram */
+canvas {
+    border-radius: 16px !important;
+    border: 3px solid #333 !important;
+    box-shadow: 
+        0 0 0 2px #1a1a1a,
+        0 0 0 4px #e52521,
+        0 8px 30px rgba(0, 0, 0, 0.8) !important;
+    max-width: 100%;
+    height: auto;
+    background: #000 !important;
+    display: block;
+    margin: 16px auto;
+}
+
+/* ---------- POÄNG-VISNING ---------- */
+.score-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.9rem;
+    padding: 12px 24px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    border: 2px solid #333;
+    margin-bottom: 16px;
+    color: #aaaaaa;
+}
+
+.score-container .current-score {
+    color: #41b53d;
+}
+
+.score-container .high-score {
+    color: #f7d51e;
+}
+
+/* ---------- GAME OVER OVERLAY ---------- */
+.game-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 30px 40px;
+    border-radius: 16px;
+    text-align: center;
+    color: white;
+    display: none;
+    z-index: 10;
+    border: 2px solid #f7d51e;
+    box-shadow: 0 0 40px rgba(247, 213, 30, 0.1);
+    min-width: 200px;
+}
+
+.game-overlay.show {
+    display: block;
+}
+
+.game-overlay h2 {
+    font-family: 'Press Start 2P', monospace;
+    color: #f7d51e;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.game-overlay p {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    color: #dddddd;
+}
+
+/* ---------- KONTAKTFORMULÄR ---------- */
+.form-control {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 2px solid #333 !important;
+    color: #e0e0e0 !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    font-family: 'VT323', 'Courier New', monospace;
+    font-size: 1.1rem !important;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #f7d51e !important;
+    box-shadow: 0 0 20px rgba(247, 213, 30, 0.1) !important;
+    outline: none !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.form-control::placeholder {
+    color: #666;
+}
+
+.form-label {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.6rem;
+    color: #aaaaaa;
+    margin-bottom: 6px;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    margin-top: auto;
+    padding: 20px 0;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-top: 2px solid #e52521 !important;
+}
+
+footer p {
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    font-size: 0.6rem;
+    color: #666 !important;
+    letter-spacing: 1px;
+}
+
+/* ---------- RESPONSIVITET ---------- */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero .lead {
+        font-size: 1.1rem;
+    }
+    
+    .card .card-title {
+        font-size: 0.85rem;
+    }
+    
+    .card .card-text {
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        font-size: 0.55rem;
+        padding: 8px 20px;
+    }
+    
+    .game-container h1 {
+        font-size: 1.3rem;
+    }
+    
+    .score-container {
+        font-size: 0.65rem;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .navbar-brand {
+        font-size: 0.9rem !important;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 0.55rem;
+        padding: 6px 12px !important;
+    }
+    
+    canvas {
+        border-width: 3px !important;
+        box-shadow: 
+            0 0 0 2px #1a1a1a,
+            0 0 0 3px #e52521,
+            0 6px 20px rgba(0, 0, 0, 0.8) !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 30px 0 20px;
+    }
+    
+    .hero h1 {
+        font-size: 1.2rem;
+    }
+    
+    .card {
+        border-radius: 12px !important;
+    }
+    
+    canvas {
+        border-radius: 12px !important;
+    }
+}
+
+/* ---------- ANIMATIONER ---------- */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(247, 213, 30, 0.2); }
+    50% { text-shadow: 0 0 40px rgba(247, 213, 30, 0.5); }
+}
+
+.glow-text {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d0d0d;
+    border-left: 1px solid #222;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e52521;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff3333;
+}
