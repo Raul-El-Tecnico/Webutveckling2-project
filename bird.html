@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Retro Bird - Nu med poäng som fungerar!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #222; color: white; text-align: center; font-family: 'Courier New', Courier, monospace; }
+        canvas { 
+            background: #70c5ce; 
+            border: 5px solid #fff; 
+            display: block; 
+            margin: 20px auto; 
+            max-width: 90vw;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .game-container { max-width: 500px; margin: 0 auto; }
+        .score-container { display: flex; justify-content: space-around; font-size: 1.5rem; color: #f1c40f; font-weight: bold; }
+        .high-score { color: #e74c3c; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning">
+    <div class="container">
+        <a class="navbar-brand text-warning" href="index.html">RETRO HUB</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Hem</a></li>
+                <li class="nav-item"><a class="nav-link active" href="bird.html">Retro Bird</a></li>
+                <li class="nav-item"><a class="nav-link" href="snake.html">Snake</a></li>
+                <li class="nav-item"><a class="nav-link active" href="pong.html">Pong</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Kontakt</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container game-container py-4">
+    <h1>RETRO BIRD</h1>
+    
+    <div class="score-container mb-2">
+        <div>Poäng: <span id="score">0</span></div>
+        <div class="high-score">Rekord: <span id="highScore">0</span></div>
+    </div>
+    
+    <canvas id="gameCanvas" width="320" height="480"></canvas>
+    
+    <p>Tryck MELLANSLAG eller KLICKA för att flyga</p>
+
+    <div class="card bg-dark border-warning p-3 mt-2">
+        <input type="text" id="playerName" class="form-control mb-2" placeholder="Ditt namn">
+        <button class="btn btn-warning" onclick="saveName()">Spara Namn</button>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const scoreElement = document.getElementById("score");
+    const highScoreElement = document.getElementById("highScore");
+
+    // --- FYSIK-INSTÄLLNINGAR (Långsamt och bra) ---
+    let bird = { x: 50, y: 200, w: 20, h: 20, gravity: 0.18, lift: -4.5, velocity: 0 };
+    let pipes = [];
+    let frameCount = 0;
+    let score = 0;
+    let gameStarted = false;
+
+    // Hämta Highscore
+    let highScore = localStorage.getItem("birdHighScore") || 0;
+    highScoreElement.textContent = highScore;
+
+    function jump() {
+        if (!gameStarted) {
+            gameStarted = true;
+        }
+        bird.velocity = bird.lift;
+    }
+
+    document.addEventListener("keydown", (e) => { if (e.code === "Space") jump(); });
+    canvas.addEventListener("mousedown", jump);
+
+    function draw() {
+        ctx.fillStyle = "#70c5ce";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (!gameStarted) {
+            ctx.fillStyle = "white";
+            ctx.font = "18px 'Courier New'";
+            ctx.fillText("KLICKA FÖR ATT STARTA", 45, canvas.height / 2);
+            drawBird();
+            requestAnimationFrame(draw);
+            return;
+        }
+
+        bird.velocity += bird.gravity;
+        bird.y += bird.velocity;
+        drawBird();
+
+        // Skapa rör
+        if (frameCount % 130 === 0) { 
+            let gap = 160; 
+            let topHeight = Math.random() * (canvas.height - gap - 100) + 50;
+            // Lade till 'passed: false' för att hålla koll på poängen
+            pipes.push({ x: canvas.width, top: topHeight, bottom: topHeight + gap, passed: false });
+        }
+
+        ctx.fillStyle = "#2ecc71";
+        pipes.forEach((p) => {
+            p.x -= 1.3; 
+            
+            ctx.fillRect(p.x, 0, 50, p.top);
+            ctx.fillRect(p.x, p.bottom, 50, canvas.height - p.bottom);
+
+            // Kolla kollision
+            if (bird.x < p.x + 50 && bird.x + bird.w > p.x &&
+                (bird.y < p.top || bird.y + bird.h > p.bottom)) {
+                gameOver();
+            }
+
+            // --- NY POÄNGRÄKNING ---
+            // Om fågelns X-position är större än rörets X-position + dess bredd
+            // OCH vi inte redan har räknat poäng för detta rör
+            if (bird.x > p.x + 50 && !p.passed) {
+                score++;
+                p.passed = true; // Markera som avklarat!
+                scoreElement.textContent = score;
+            }
+        });
+
+        if (pipes.length > 0 && pipes[0].x < -50) pipes.shift();
+        if (bird.y + bird.h > canvas.height || bird.y < 0) gameOver();
+
+        frameCount++;
+        requestAnimationFrame(draw);
+    }
+
+    function drawBird() {
+        ctx.fillStyle = "#f1c40f";
+        ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(bird.x, bird.y, bird.w, bird.h);
+    }
+
+    function gameOver() {
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem("birdHighScore", highScore);
+            highScoreElement.textContent = highScore;
+        }
+        bird.y = 200; bird.velocity = 0; pipes = []; score = 0;
+        scoreElement.textContent = score; frameCount = 0;
+        gameStarted = false;
+    }
+
+    function saveName() {
+        let name = document.getElementById("playerName").value;
+        if(name) alert("Namn sparat: " + name);
+    }
+
+    draw();
+</script>
+
+</body>
+</html>
